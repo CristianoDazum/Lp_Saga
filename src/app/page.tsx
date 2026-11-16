@@ -8,6 +8,7 @@ import {
   course,
   courseCover,
   instructorPhoto,
+  pronunciationExample,
   questions,
   topics,
 } from "@/lib/content";
@@ -40,7 +41,8 @@ export default function Home() {
                 <br />
                 Mas consegue
                 <br className="desktop-break" /> pronunciá-las
-                <br className="desktop-break" /> <em>com segurança?</em>
+                <br className="desktop-break" />{" "}
+                <span className="hero-highlight">com segurança?</span>
               </h1>
               <p className="hero-description hero-enter">
                 Em uma aula gravada de aproximadamente 30 minutos, Leonardo
@@ -53,6 +55,31 @@ export default function Home() {
                 <p>
                   <strong>R$ 47,90</strong>
                   <span>Pagamento único. Sem assinatura.</span>
+                </p>
+              </div>
+              <div className="hero-example hero-enter">
+                <p className="hero-example-title">
+                  {pronunciationExample.title
+                    .split(/\b(lai-ki|like)\b/)
+                    .map((part, index) =>
+                      part === "lai-ki" || part === "like" ? (
+                        <span
+                          key={index}
+                          className={
+                            part === "like"
+                              ? "hero-example-word"
+                              : "hero-example-sound"
+                          }
+                        >
+                          {part}
+                        </span>
+                      ) : (
+                        part
+                      ),
+                    )}
+                </p>
+                <p className="hero-example-description">
+                  {pronunciationExample.description}
                 </p>
               </div>
             </div>

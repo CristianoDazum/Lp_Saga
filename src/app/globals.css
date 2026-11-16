@@ -225,14 +225,14 @@ h1 {
   margin-bottom: 23px;
   font-family: var(--font-manrope), Arial, sans-serif;
 }
-h1 em,
 h2 em {
   font-family: var(--font-lora), Georgia, serif;
   font-weight: 400;
 }
-h1 em {
+.hero-highlight {
   color: #f5cc63;
   white-space: nowrap;
+  font-style: normal;
 }
 .hero-description {
   font-size: 14px;
@@ -256,6 +256,37 @@ h1 em {
 .hero-purchase > p strong {
   font-size: 16px;
   color: var(--paper);
+}
+.hero-example {
+  max-width: 440px;
+  margin-top: 20px;
+  padding-left: 14px;
+  border-left: 2px solid #789d93;
+}
+.hero-example-title {
+  margin-bottom: 5px;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-wrap: balance;
+  color: var(--paper);
+}
+.hero-example-sound,
+.hero-example-word {
+  white-space: nowrap;
+}
+.hero-example-sound {
+  color: #b7d3c7;
+}
+.hero-example-word {
+  color: #f5cc63;
+}
+.hero-example-description {
+  margin-bottom: 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #c3d0d1;
 }
 .hero-visual {
   min-width: 0;
@@ -713,6 +744,9 @@ h2 {
 .hero-purchase.hero-enter {
   animation-delay: 140ms;
 }
+.hero-example.hero-enter {
+  animation-delay: 210ms;
+}
 .hero-visual.hero-enter {
   animation-delay: 100ms;
 }
@@ -915,7 +949,7 @@ h2 {
     line-height: 1.09;
     margin-bottom: 20px;
   }
-  h1 em {
+  .hero-highlight {
     white-space: normal;
   }
   .hero-description {

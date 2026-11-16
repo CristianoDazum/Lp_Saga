@@ -15,6 +15,55 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
   await expect(page).toHaveTitle(/Pronúncia em Inglês.*Saga Eloquência/);
   await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
   await expect(page.locator("h1")).toHaveCount(1);
+  await expect(page.locator("h1 em, h1 i")).toHaveCount(0);
+  await expect(page.locator(".hero-highlight")).toHaveText("com segurança?");
+  expect(
+    await page.locator(".hero-highlight").evaluate((element) => {
+      const highlight = getComputedStyle(element);
+      const heading = getComputedStyle(element.closest("h1")!);
+      return {
+        style: highlight.fontStyle,
+        sameFamily: highlight.fontFamily === heading.fontFamily,
+        sameWeight: highlight.fontWeight === heading.fontWeight,
+        color: highlight.color,
+      };
+    }),
+  ).toEqual({
+    style: "normal",
+    sameFamily: true,
+    sameWeight: true,
+    color: "rgb(245, 204, 99)",
+  });
+  await expect(page.locator(".hero-example-title")).toHaveText(
+    "Pare de falar 'lai-ki' quando quiser dizer 'like'.",
+  );
+  await expect(page.locator(".hero-example-description")).toHaveText(
+    "Pequenos detalhes na pronúncia fazem diferença. Aprenda a identificar e corrigir esses sons.",
+  );
+  await expect(page.locator(".hero-example-sound")).toHaveText("lai-ki");
+  await expect(page.locator(".hero-example-word")).toHaveText("like");
+  expect(
+    await page.locator(".hero-example-title").evaluate((element) => {
+      const style = getComputedStyle(element);
+      const support = getComputedStyle(element.nextElementSibling!);
+      return {
+        size: parseFloat(style.fontSize),
+        weight: style.fontWeight,
+        supportSmaller:
+          parseFloat(support.fontSize) < parseFloat(style.fontSize),
+      };
+    }),
+  ).toEqual({ size: 16, weight: "700", supportSmaller: true });
+  expect(
+    await page
+      .locator(".hero-example-sound")
+      .evaluate((element) => getComputedStyle(element).color),
+  ).toBe("rgb(183, 211, 199)");
+  expect(
+    await page
+      .locator(".hero-example-word")
+      .evaluate((element) => getComputedStyle(element).color),
+  ).toBe("rgb(245, 204, 99)");
   await expect(page.locator(".topic")).toHaveCount(6);
   await expect(page.locator(".time-stamp")).toHaveCount(0);
   await expect(page.locator(".hero-description")).toContainText(
@@ -67,13 +116,13 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
     contentType: "application/json",
   });
   console.log(`[${testInfo.project.name}] ${JSON.stringify(layout)}`);
+  const heroCta = await page
+    .locator(".hero-purchase [data-checkout]")
+    .boundingBox();
+  expect(heroCta && heroCta.y + heroCta.height).toBeLessThan(
+    page.viewportSize()!.height,
+  );
   if (testInfo.project.name === "desktop-1440") {
-    const heroCta = await page
-      .locator(".hero-purchase [data-checkout]")
-      .boundingBox();
-    expect(heroCta && heroCta.y + heroCta.height).toBeLessThan(
-      page.viewportSize()!.height,
-    );
     expect(
       await page.evaluate(
         () => document.documentElement.scrollHeight / window.innerHeight,
@@ -195,11 +244,9 @@ test("CTA centralizado nos conteúdos, crédito acessível e capa configurável"
   await expect(page.locator(".curriculum-note")).toContainText(
     "Você já conhece o inglês. Agora, dê atenção a como ele soa.",
   );
-  await page
-    .locator(".curriculum")
-    .screenshot({
-      path: `test-results/feedback-conteudos-${testInfo.project.name}.png`,
-    });
+  await page.locator(".curriculum").screenshot({
+    path: `test-results/feedback-conteudos-${testInfo.project.name}.png`,
+  });
 
   const credit = page.locator(".footer-credit a");
   await expect(page.locator(".footer-credit")).toContainText(
@@ -221,11 +268,9 @@ test("CTA centralizado nos conteúdos, crédito acessível e capa configurável"
   await expect
     .poll(() => credit.evaluate((element) => getComputedStyle(element).color))
     .toBe("rgb(243, 188, 35)");
-  await page
-    .locator(".site-footer")
-    .screenshot({
-      path: `test-results/feedback-rodape-${testInfo.project.name}.png`,
-    });
+  await page.locator(".site-footer").screenshot({
+    path: `test-results/feedback-rodape-${testInfo.project.name}.png`,
+  });
   await context.route("https://www.dazumdigital.com.br/", (route) =>
     route.fulfill({
       contentType: "text/html",
@@ -327,7 +372,8 @@ test("fontes locais, nitidez em repouso e hover dos tópicos", async ({
   for (const [selector, name] of [
     ["h1", "manrope"],
     ["body", "inter"],
-    ["h1 em", "lora"],
+    [".hero-highlight", "manrope"],
+    ["#curriculum-title em", "lora"],
   ]) {
     const family = await page
       .locator(selector)

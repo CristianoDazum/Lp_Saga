@@ -9,6 +9,13 @@ export const course = {
   email: "mailto:leonardo@sagaeloquencia.com",
 } as const;
 
+// Proposta para homologação local: exemplo pendente da validação final de Leonardo.
+export const pronunciationExample = {
+  title: "Pare de falar 'lai-ki' quando quiser dizer 'like'.",
+  description:
+    "Pequenos detalhes na pronúncia fazem diferença. Aprenda a identificar e corrigir esses sons.",
+} as const;
+
 // Substituição da arte: atualizar este objeto após salvar o WebP final em public/images/.
 export const courseCover = {
   src: "/images/capa-curso.webp",
