@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { courseCover } from "../src/lib/content";
 
 const checkout = "https://pay.kiwify.com.br/9AVIr7g";
 
@@ -31,7 +32,7 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
     /30 minutos/,
   );
   const purchaseLinks = page.locator("a[data-checkout]");
-  await expect(purchaseLinks).toHaveCount(4);
+  await expect(purchaseLinks).toHaveCount(5);
   for (const link of await purchaseLinks.all()) {
     await expect(link).toHaveAttribute("href", checkout);
     await expect(link).toHaveAttribute("target", "_blank");
@@ -68,7 +69,7 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
   console.log(`[${testInfo.project.name}] ${JSON.stringify(layout)}`);
   if (testInfo.project.name === "desktop-1440") {
     const heroCta = await page
-      .getByRole("link", { name: /Quero melhorar minha pronúncia/ })
+      .locator(".hero-purchase [data-checkout]")
       .boundingBox();
     expect(heroCta && heroCta.y + heroCta.height).toBeLessThan(
       page.viewportSize()!.height,
@@ -114,7 +115,10 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
   expect(errors).toEqual([]);
 });
 
-test("CTA abre o destino de compra em nova aba", async ({ page, context }) => {
+test("todos os CTAs abrem o destino de compra em nova aba", async ({
+  page,
+  context,
+}) => {
   // Interceptar o destino valida a navegação sem realizar uma compra ou depender do serviço externo.
   await context.route(checkout, (route) =>
     route.fulfill({
@@ -123,14 +127,15 @@ test("CTA abre o destino de compra em nova aba", async ({ page, context }) => {
     }),
   );
   await page.goto("/");
-  const popupPromise = page.waitForEvent("popup");
-  await page
-    .getByRole("link", { name: /Quero melhorar minha pronúncia/ })
-    .click();
-  const popup = await popupPromise;
-  await expect(popup).toHaveURL(checkout);
-  await expect(popup).toHaveTitle("Checkout validado");
-  expect(await popup.evaluate(() => window.opener === null)).toBe(true);
+  for (const button of await page.locator("a[data-checkout]").all()) {
+    const popupPromise = page.waitForEvent("popup");
+    await button.click();
+    const popup = await popupPromise;
+    await expect(popup).toHaveURL(checkout);
+    await expect(popup).toHaveTitle("Checkout validado");
+    expect(await popup.evaluate(() => window.opener === null)).toBe(true);
+    await popup.close();
+  }
 });
 
 test("acessibilidade WCAG AA e navegação por teclado", async ({ page }) => {
@@ -148,6 +153,91 @@ test("acessibilidade WCAG AA e navegação por teclado", async ({ page }) => {
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
     .analyze();
   expect(audit.violations).toEqual([]);
+});
+
+test("CTA centralizado nos conteúdos, crédito acessível e capa configurável", async ({
+  page,
+  context,
+}, testInfo) => {
+  await page.goto("/");
+  const image = page.locator(".course-cover");
+  await expect(image).toHaveAttribute("width", String(courseCover.width));
+  await expect(image).toHaveAttribute("height", String(courseCover.height));
+  await expect(image).toHaveAttribute("alt", courseCover.alt);
+  expect(courseCover.width / courseCover.height).toBeCloseTo(6 / 5, 5);
+  expect(
+    await image.evaluate((element: HTMLImageElement) =>
+      new URL(element.currentSrc).searchParams.get("url"),
+    ),
+  ).toBe(courseCover.src);
+  const cta = page.locator(".curriculum-cta [data-checkout]");
+  await expect(cta).toContainText("Quero melhorar minha pronúncia");
+  await cta.scrollIntoViewIfNeeded();
+  await expect
+    .poll(() =>
+      cta.evaluate((element) => element.parentElement!.getAnimations().length),
+    )
+    .toBe(0);
+  const buttonBox = await cta.boundingBox();
+  const sectionBox = await page.locator("#o-curso > .container").boundingBox();
+  const gridBox = await page.locator(".topics-grid").boundingBox();
+  const noteBox = await page.locator(".curriculum-note").boundingBox();
+  expect(
+    Math.abs(
+      buttonBox!.x +
+        buttonBox!.width / 2 -
+        sectionBox!.x -
+        sectionBox!.width / 2,
+    ),
+  ).toBeLessThan(1);
+  expect(buttonBox!.y).toBeGreaterThanOrEqual(gridBox!.y + gridBox!.height);
+  expect(noteBox!.y).toBeGreaterThanOrEqual(buttonBox!.y + buttonBox!.height);
+  await expect(page.locator(".curriculum-note")).toContainText(
+    "Você já conhece o inglês. Agora, dê atenção a como ele soa.",
+  );
+  await page
+    .locator(".curriculum")
+    .screenshot({
+      path: `test-results/feedback-conteudos-${testInfo.project.name}.png`,
+    });
+
+  const credit = page.locator(".footer-credit a");
+  await expect(page.locator(".footer-credit")).toContainText(
+    "Feito por DazumDigital",
+  );
+  await expect(credit).toHaveAttribute(
+    "href",
+    "https://www.dazumdigital.com.br/",
+  );
+  await expect(credit).toHaveAttribute("target", "_blank");
+  await expect(credit).toHaveAttribute("rel", "noopener noreferrer");
+  await page.keyboard.press("Tab");
+  await credit.focus();
+  await expect(credit).toBeFocused();
+  expect(
+    await credit.evaluate((element) => getComputedStyle(element).outlineStyle),
+  ).toBe("solid");
+  await credit.hover();
+  await expect
+    .poll(() => credit.evaluate((element) => getComputedStyle(element).color))
+    .toBe("rgb(243, 188, 35)");
+  await page
+    .locator(".site-footer")
+    .screenshot({
+      path: `test-results/feedback-rodape-${testInfo.project.name}.png`,
+    });
+  await context.route("https://www.dazumdigital.com.br/", (route) =>
+    route.fulfill({
+      contentType: "text/html",
+      body: "<title>DazumDigital</title>",
+    }),
+  );
+  const popupPromise = page.waitForEvent("popup");
+  await credit.click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL("https://www.dazumdigital.com.br/");
+  expect(await popup.evaluate(() => window.opener === null)).toBe(true);
+  await popup.close();
 });
 
 test("movimento reduzido e conteúdo disponível sem JavaScript", async ({

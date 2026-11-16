@@ -4,7 +4,13 @@ import { CheckoutLink } from "@/components/checkout-link";
 import { Icon } from "@/components/icon";
 import { Reveal } from "@/components/reveal";
 import { Soundwave } from "@/components/soundwave";
-import { course, instructorPhoto, questions, topics } from "@/lib/content";
+import {
+  course,
+  courseCover,
+  instructorPhoto,
+  questions,
+  topics,
+} from "@/lib/content";
 
 export default function Home() {
   return (
@@ -58,10 +64,10 @@ export default function Home() {
               <div className="cover-hover">
                 <div className="cover-frame">
                   <Image
-                    src="/images/capa-curso.webp"
-                    alt="Capa de O Guia Definitivo de Pronúncia Básica em Inglês, com Leonardo Hermes"
-                    width={1374}
-                    height={1145}
+                    src={courseCover.src}
+                    alt={courseCover.alt}
+                    width={courseCover.width}
+                    height={courseCover.height}
                     sizes="(max-width: 600px) 90vw, (max-width: 1000px) 65vw, 480px"
                     preload
                     className="course-cover"
@@ -130,6 +136,9 @@ export default function Home() {
                   </Reveal>
                 ))}
               </div>
+              <Reveal className="curriculum-cta">
+                <CheckoutLink>Quero melhorar minha pronúncia</CheckoutLink>
+              </Reveal>
               <Reveal className="curriculum-note">
                 <span className="note-dot" />
                 <p>
@@ -275,6 +284,16 @@ export default function Home() {
           <div className="container footer-bottom">
             <span>© {new Date().getFullYear()} Saga Eloquência</span>
             <span>Com Leonardo Hermes.</span>
+            <span className="footer-credit">
+              Feito por{" "}
+              <a
+                href="https://www.dazumdigital.com.br/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                DazumDigital<span className="sr-only"> (nova aba)</span>
+              </a>
+            </span>
           </div>
         </footer>
       </div>

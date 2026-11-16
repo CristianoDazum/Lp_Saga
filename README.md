@@ -2,7 +2,17 @@
 
 Landing page local para **O Guia Definitivo de Pronúncia Básica em Inglês**, de Leonardo Hermes. Quatro seções comerciais, sem checkout próprio, formulários, integrações pagas ou rastreadores.
 
-Versão atual: [capa sem selo e passos com animações](docs/PASSOS-E-CAPA.md). Histórico: [microinterações de foto, capa, botões e navegação](docs/MICROINTERACOES.md) e [fontes e fotografia](docs/ALTERACOES-VISUAIS.md).
+Versão atual: CTA adicional na seção de conteúdos, créditos da DazumDigital e referência centralizada da capa. Histórico: [capa sem selo e passos com animações](docs/PASSOS-E-CAPA.md), [microinterações de foto, capa, botões e navegação](docs/MICROINTERACOES.md) e [fontes e fotografia](docs/ALTERACOES-VISUAIS.md).
+
+## Validação da rodada de feedback
+
+- Build, lint e TypeScript aprovados; **40 testes Playwright aprovados**, sem retentativas, em aproximadamente 1,2 minuto.
+- Validados os cinco CTAs de compra, incluindo navegação para o destino interceptado, nova aba e isolamento de `window.opener`. Nenhuma compra foi realizada.
+- Verificados centralização do CTA, frase da seção preservada, créditos com foco visível e link em nova aba, configuração da capa e ausência de regressões nas microinterações.
+- Nenhum erro de console nos cenários funcionais; nenhuma violação axe WCAG A/AA na apresentação estável.
+- Sem rolagem horizontal em 320, 375, 768 e 1440px. Alturas finais: 4.208px, 4.257px, 2.747px e 2.880px, respectivamente. Em desktop de 1440 × 768px, são **3,75 dobras**, com acréscimo de apenas 83px (cerca de 3%) sobre a versão anterior.
+- A primeira dobra mantém imagem, proporções, preload e hover da capa atual. Nenhuma arte provisória foi criada.
+- Validado em Chromium; não foi executado Lighthouse ou teste em aparelhos físicos. A troca pela capa final continua pendente do arquivo da equipe de design.
 
 ## Executar
 
@@ -46,7 +56,7 @@ src/
     icon.tsx           # Ícones SVG locais
     reveal.tsx         # Reveal progressivo e suporte a movimento reduzido
     soundwave.tsx      # Grafismo estático de ondas sonoras
-  lib/content.ts       # Oferta, tópicos, FAQ, URLs e configuração da foto
+  lib/content.ts       # Oferta, tópicos, FAQ, URLs, capa e fotografia
   lib/fonts.ts         # Manrope, Inter e Lora via next/font/local
 public/images/         # Capa do curso otimizada
 tests/                 # Testes de aceitação em navegador
@@ -56,7 +66,8 @@ docs/                  # Relatório de homologação
 ## Conteúdo e decisões
 
 - Oferta: uma aula gravada de aproximadamente 30 minutos, R$ 47,90, pagamento único, sem assinatura. Público: quem já estuda ou estudou inglês.
-- Todos os quatro CTAs de compra usam exatamente `https://pay.kiwify.com.br/9AVIr7g`, em nova aba com `noopener noreferrer`. Instagram, WhatsApp e e-mail são os do briefing, centralizados em `src/lib/content.ts`.
+- Todos os cinco CTAs de compra usam exatamente `https://pay.kiwify.com.br/9AVIr7g`, em nova aba com `noopener noreferrer`. O CTA abaixo dos seis tópicos reutiliza `CheckoutLink`, centralizado e com largura adaptada ao mobile, mantendo a frase de encerramento da seção. Instagram, WhatsApp e e-mail são os do briefing, centralizados em `src/lib/content.ts`.
+- O rodapé inclui “Feito por DazumDigital”, com link para `https://www.dazumdigital.com.br/`, em nova aba, `noopener noreferrer`, foco visível e hover discreto.
 - A capa utilizada veio de `Capa Guia Definitivo de Pronúncia.png`, encontrada junto ao briefing em Downloads, com 1374 × 1145px. O antigo painel LH foi removido e substituído pela foto original `leo_apresentando.png`, fornecida pelo cliente e copiada para `public/images/leo-apresentando.png`, sem filtros ou alterações na aparência. O `next/image` otimiza a entrega e carrega a foto abaixo da dobra sob demanda.
 - A capa foi convertida para WebP, preservando as dimensões: 62.462 bytes, contra 1.457.019 bytes do PNG original (redução de aproximadamente 95,7%). O `next/image` também entrega versões responsivas.
 - Marca textual e favicon tipográfico temporários, sem reconstrução do logo oficial. Paleta provisória azul-petróleo, off-white, verde discreto e amarelo.
@@ -65,6 +76,30 @@ docs/                  # Relatório de homologação
 - Os tópicos são artigos informativos, sem setas ou falsa semântica de botão. Em mouse com hover real, elevam 4px em 200ms com sombra, fundo e borda discretos; em dispositivos de toque não dependem de hover. Movimento reduzido desativa a elevação.
 - As animações de entrada liberam suas transformações ao terminar. Não há blur, text-shadow, escala ou font-smoothing imposto nos textos. As rotações da capa e do selo foram removidas para melhorar a nitidez de suas letras. A suavização final continua dependendo do navegador, sistema e monitor.
 - Next.js atualizado para 16.4.6 após auditoria. A dependência de desenvolvimento `@typescript-eslint/typescript-estree` usa um override de `minimatch` para a versão corrigida 11.0.1 ou superior. O lint valida a compatibilidade desse ajuste. ESLint 9 foi mantido por compatibilidade com os plugins do `eslint-config-next`; o npm informa que essa linha saiu de suporte, portanto atualizar o conjunto do linter quando os plugins suportarem ESLint 10.
+
+## Substituir a capa do curso
+
+A capa atual permanece ativa. A referência única está no objeto `courseCover` de `src/lib/content.ts`: caminho público, largura, altura e texto alternativo. O hero usa esses valores com `next/image`; os estilos e o hover não dependem do nome do arquivo.
+
+Quando a arte final chegar:
+
+1. Conferir a dimensão de origem **1200 × 1000px**, proporção **6:5** (a mesma proporção da capa atual), e exportar um WebP otimizado.
+2. Salvar em **`public/images/capa-curso-final.webp`**. Esse caminho está reservado por convenção; nenhum arquivo vazio, imagem provisória ou placeholder foi criado.
+3. Somente depois de salvar o arquivo, atualizar o objeto em `src/lib/content.ts`:
+
+```ts
+export const courseCover = {
+  src: "/images/capa-curso-final.webp",
+  width: 1200,
+  height: 1000,
+  alt: "Capa de O Guia Definitivo de Pronúncia Básica em Inglês, com Leonardo Hermes",
+} as const;
+```
+
+4. Executar `npm run build`, `npm run lint`, `npm run typecheck` e `npm run test:e2e`.
+5. Conferir a primeira dobra em 320, 375, 768 e 1440px, incluindo nitidez, carregamento e hover. Os testes usam a configuração centralizada, por isso a troca não exige editar seletores ou caminhos de imagem nos testes.
+
+Não é necessário alterar o JSX, proporções ou CSS da primeira dobra. Até a entrega da nova arte, manter `src: "/images/capa-curso.webp"` e as dimensões atuais de 1374 × 1145px. A troca de arquivo e configuração é um ajuste futuro e requer nova validação antes de publicar.
 
 ## Antes da publicação
 
@@ -80,4 +115,4 @@ docs/                  # Relatório de homologação
 
 O projeto usa Next.js App Router e o build padrão reconhecido pela Vercel: instalação `npm ci`, build `npm run build`, saída automática do Next.js. Não requer variáveis de ambiente. Não é necessário adicionar `vercel.json` para este caso.
 
-**Nenhum deploy, push ou criação de repositório remoto foi executado.**
+**Esta rodada é validada e versionada localmente; o push e a atualização da publicação ficam a cargo da equipe.** O repositório oficial é `DazumDigital/Lp_Saga` (`origin`) e o secundário é `CristianoDazum/Lp_Saga` (`secondary`).

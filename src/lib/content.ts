@@ -9,6 +9,14 @@ export const course = {
   email: "mailto:leonardo@sagaeloquencia.com",
 } as const;
 
+// Substituição da arte: atualizar este objeto após salvar o WebP final em public/images/.
+export const courseCover = {
+  src: "/images/capa-curso.webp",
+  width: 1374,
+  height: 1145,
+  alt: "Capa de O Guia Definitivo de Pronúncia Básica em Inglês, com Leonardo Hermes",
+} as const;
+
 // Foto original fornecida pelo cliente; o foco à direita preserva rosto e mãos.
 export const instructorPhoto = {
   src: "/images/leo-apresentando.png",
