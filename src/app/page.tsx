@@ -134,7 +134,8 @@ export default function Home() {
                 <div>
                   <p className="eyebrow">01 / O CURSO</p>
                   <h2 id="curriculum-title">
-                    O que você vai <em>aprender.</em>
+                    Você vai corrigir os erros mais comuns de <em>pronúncia</em>{" "}
+                    entre alunos de nível básico.
                   </h2>
                 </div>
                 <p>
@@ -146,16 +147,13 @@ export default function Home() {
               <div className="topics-grid">
                 {topics.map((topic, index) => (
                   <Reveal
-                    key={topic.sound}
+                    key={topic.id}
                     delay={index * 45}
                     className="topic-reveal"
                   >
                     <article className="topic">
                       <span className="topic-number">0{index + 1}</span>
                       <div>
-                        <span className="topic-sound" lang="en">
-                          {topic.sound}
-                        </span>
                         <h3>{topic.title}</h3>
                         <p>{topic.description}</p>
                       </div>
@@ -201,9 +199,13 @@ export default function Home() {
                   </h2>
                   <p className="instructor-bio">
                     Professor de inglês e mentor de oratória à frente da Saga
-                    Eloquência. Nesta aula, Leonardo reúne seis pontos da
-                    pronúncia em inglês que costumam gerar dúvidas entre
-                    brasileiros.
+                    Eloquência. Os seis pontos abordados neste curso foram
+                    selecionados a partir das dificuldades de pronúncia mais
+                    recorrentes que Leonardo Hermes identificou em seus alunos
+                    ao longo de{" "}
+                    <strong>
+                      quase 30 anos de experiência ensinando inglês.
+                    </strong>
                   </p>
                 </Reveal>
                 <Reveal stagger={100}>

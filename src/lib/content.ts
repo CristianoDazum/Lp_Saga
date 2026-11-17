@@ -32,35 +32,40 @@ export const instructorPhoto = {
 
 export const topics = [
   {
-    sound: "T · D · P · K",
-    title: "O final da palavra faz diferença.",
-    description: "Entenda a pronúncia das consoantes finais T, D, P e K.",
-  },
-  {
-    sound: "L · M · N",
-    title: "Letras conhecidas. Outros sons.",
-    description: "Conheça os sons de L, M e N na pronúncia em inglês.",
-  },
-  {
-    sound: "like / type",
-    title: "E esse E no final?",
+    id: "consoantes-finais",
+    title: "Termine as palavras com mais clareza.",
     description:
-      "Veja como pronunciar palavras que terminam em consoante + E, como like e type.",
+      "Entenda como pronunciar o final de palavras com T, D, P e K, sem depender apenas da leitura.",
   },
   {
-    sound: "TH",
-    title: "Um som que merece atenção.",
-    description: "Entenda o som de TH, uma dúvida comum entre brasileiros.",
+    id: "sons-lmn",
+    title: "Dê atenção aos sons que parecem familiares.",
+    description:
+      "Conheça os sons de L, M e N em inglês e observe o que muda na hora de falar.",
   },
   {
-    sound: "R",
-    title: "Comece com o som certo.",
-    description: "Explore a pronúncia do R no início das palavras.",
+    id: "consoante-e",
+    title: "Não deixe a escrita confundir sua fala.",
+    description:
+      "Descubra como o E final influencia a pronúncia de palavras como like e type.",
   },
   {
-    sound: "I · EE · EA",
-    title: "Parecidos na escrita. E na fala?",
-    description: "Perceba as diferenças de pronúncia entre I, EE e EA.",
+    id: "som-th",
+    title: "Entenda um som que costuma gerar dúvida.",
+    description:
+      "Conheça o som de TH e saiba no que prestar atenção ao pronunciá-lo.",
+  },
+  {
+    id: "r-inicial",
+    title: "Comece as palavras com mais segurança.",
+    description:
+      "Veja como pronunciar o R no início das palavras em inglês, uma dúvida comum entre brasileiros.",
+  },
+  {
+    id: "i-ee-ea",
+    title: "Perceba diferenças que passam despercebidas.",
+    description:
+      "Aprenda a distinguir os sons de I, EE e EA, mesmo quando a escrita parece semelhante.",
   },
 ] as const;
 

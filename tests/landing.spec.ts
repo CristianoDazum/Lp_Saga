@@ -65,6 +65,35 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
       .evaluate((element) => getComputedStyle(element).color),
   ).toBe("rgb(245, 204, 99)");
   await expect(page.locator(".topic")).toHaveCount(6);
+  await expect(page.locator("#curriculum-title")).toHaveText(
+    "Você vai corrigir os erros mais comuns de pronúncia entre alunos de nível básico.",
+  );
+  await expect(page.locator(".topic-sound")).toHaveCount(0);
+  const realSubjects = [
+    /T, D, P e K/,
+    /L, M e N/,
+    /E final.*like e type/,
+    /som de TH/,
+    /R no início/,
+    /I, EE e EA/,
+  ];
+  for (const [index, subject] of realSubjects.entries()) {
+    await expect(page.locator(".topic p").nth(index)).toContainText(subject);
+  }
+  await expect(page.locator(".instructor-bio")).toContainText(
+    "quase 30 anos de experiência ensinando inglês.",
+  );
+  await expect(page.locator(".instructor-bio")).toContainText(
+    "dificuldades de pronúncia mais recorrentes que Leonardo Hermes identificou em seus alunos",
+  );
+  expect(
+    await page
+      .locator(".topics-grid")
+      .evaluate(
+        (element) =>
+          getComputedStyle(element).gridTemplateColumns.split(" ").length,
+      ),
+  ).toBe(page.viewportSize()!.width > 600 ? 2 : 1);
   await expect(page.locator(".time-stamp")).toHaveCount(0);
   await expect(page.locator(".hero-description")).toContainText(
     "aproximadamente 30 minutos",

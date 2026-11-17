@@ -398,6 +398,19 @@ h2 {
   color: var(--muted);
   margin-bottom: 2px;
 }
+.curriculum .section-heading > div {
+  flex: 1;
+  min-width: 0;
+}
+.curriculum .section-heading > p {
+  flex: 0 0 250px;
+  max-width: 250px;
+}
+#curriculum-title {
+  max-width: 760px;
+  font-size: clamp(28px, 2.5vw, 36px);
+  text-wrap: balance;
+}
 .topics-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -418,23 +431,13 @@ h2 {
   color: #52665c;
   margin-top: 7px;
 }
-.topic-sound {
-  display: block;
-  font-family: var(--font-manrope), Arial, sans-serif;
-  font-size: 27px;
-  color: #315b50;
-  letter-spacing: -0.03em;
-  margin-bottom: 9px;
-  line-height: 1;
-  font-weight: 600;
-}
 .topic h3 {
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: -0.15px;
   font-weight: 700;
   margin-bottom: 7px;
   font-family: var(--font-manrope), Arial, sans-serif;
-  line-height: 1.5;
+  line-height: 1.35;
 }
 .topic p {
   color: var(--muted);
@@ -498,6 +501,10 @@ h2 {
   color: #4d6259;
   max-width: 470px;
   margin-bottom: 21px;
+}
+.instructor-bio strong {
+  font-weight: 600;
+  color: var(--petrol);
 }
 .steps {
   list-style: none;
@@ -867,7 +874,8 @@ h2 {
   .section-heading {
     gap: 20px;
   }
-  .section-heading > p {
+  .curriculum .section-heading > p {
+    flex-basis: 220px;
     max-width: 220px;
     font-size: 13px;
   }
@@ -1024,7 +1032,7 @@ h2 {
     font-size: 33px;
     letter-spacing: -1.2px;
   }
-  .section-heading > p {
+  .curriculum .section-heading > p {
     max-width: 100%;
     margin: 15px 0 0;
     font-size: 13px;
@@ -1040,15 +1048,11 @@ h2 {
   .topic-number {
     margin-top: 5px;
   }
-  .topic-sound {
-    font-size: 27px;
-    margin-bottom: 9px;
-  }
   .topic h3 {
-    font-size: 14px;
+    font-size: 18px;
     font-family: var(--font-manrope), Arial, sans-serif;
     font-weight: 700;
-    line-height: 1.5;
+    line-height: 1.35;
   }
   .topic p {
     font-size: 13px;
