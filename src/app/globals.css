@@ -407,6 +407,9 @@ h2 {
   font-size: clamp(28px, 2.5vw, 36px);
   text-wrap: balance;
 }
+.curriculum-highlight {
+  color: var(--petrol);
+}
 .topics-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

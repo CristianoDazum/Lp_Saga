@@ -41,7 +41,7 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
     expect(ratio).toBeCloseTo(1214 / 578, 2);
   }
   await expect(page.locator("h1 em, h1 i")).toHaveCount(0);
-  await expect(page.locator(".hero-highlight")).toHaveText("com segurança?");
+  await expect(page.locator(".hero-highlight")).toHaveText("saia do básico");
   expect(
     await page.locator(".hero-highlight").evaluate((element) => {
       const highlight = getComputedStyle(element);
@@ -91,7 +91,7 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
   ).toBe("rgb(255, 255, 255)");
   await expect(page.locator(".topic")).toHaveCount(6);
   await expect(page.locator("#curriculum-title")).toHaveText(
-    "Você vai corrigir os erros mais comuns de pronúncia entre alunos de nível básico.",
+    "Corrija os erros mais comuns do nível básico",
   );
   await expect(page.locator(".topic-sound")).toHaveCount(0);
   const realSubjects = [
@@ -427,7 +427,7 @@ test("fontes locais, nitidez em repouso e hover dos tópicos", async ({
     ["h1", "700", "normal"],
     ["body", "300", "normal"],
     [".hero-highlight", "700", "normal"],
-    ["#curriculum-title em", "200", "italic"],
+    ["#curriculum-title .curriculum-highlight", "600", "normal"],
     [".hero .eyebrow", "200", "normal"],
     ["#curriculum-title", "600", "normal"],
     [".topics-grid > :first-child h3", "500", "normal"],
