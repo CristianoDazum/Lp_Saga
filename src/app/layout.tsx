@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { inter, lora, manrope } from "@/lib/fonts";
+import { prompt } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -23,10 +23,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   // Ponto de integração futuro de analytics/pixel via next/script, apenas com IDs aprovados.
   return (
-    <html
-      lang="pt-BR"
-      className={`${manrope.variable} ${inter.variable} ${lora.variable}`}
-    >
+    <html lang="pt-BR" className={prompt.variable}>
       <body>{children}</body>
     </html>
   );

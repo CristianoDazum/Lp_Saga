@@ -32,7 +32,7 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
     style: "normal",
     sameFamily: true,
     sameWeight: true,
-    color: "rgb(245, 204, 99)",
+    color: "rgb(255, 183, 27)",
   });
   await expect(page.locator(".hero-example-title")).toHaveText(
     "Pare de falar 'lai-ki' quando quiser dizer 'like'.",
@@ -53,17 +53,17 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
           parseFloat(support.fontSize) < parseFloat(style.fontSize),
       };
     }),
-  ).toEqual({ size: 16, weight: "700", supportSmaller: true });
+  ).toEqual({ size: 16, weight: "500", supportSmaller: true });
   expect(
     await page
       .locator(".hero-example-sound")
       .evaluate((element) => getComputedStyle(element).color),
-  ).toBe("rgb(183, 211, 199)");
+  ).toBe("rgb(247, 245, 239)");
   expect(
     await page
       .locator(".hero-example-word")
       .evaluate((element) => getComputedStyle(element).color),
-  ).toBe("rgb(245, 204, 99)");
+  ).toBe("rgb(255, 183, 27)");
   await expect(page.locator(".topic")).toHaveCount(6);
   await expect(page.locator("#curriculum-title")).toHaveText(
     "Você vai corrigir os erros mais comuns de pronúncia entre alunos de nível básico.",
@@ -296,7 +296,7 @@ test("CTA centralizado nos conteúdos, crédito acessível e capa configurável"
   await credit.hover();
   await expect
     .poll(() => credit.evaluate((element) => getComputedStyle(element).color))
-    .toBe("rgb(243, 188, 35)");
+    .toBe("rgb(255, 183, 27)");
   await page.locator(".site-footer").screenshot({
     path: `test-results/feedback-rodape-${testInfo.project.name}.png`,
   });
@@ -398,16 +398,27 @@ test("fontes locais, nitidez em repouso e hover dos tópicos", async ({
     expect(photoBox!.y + photoBox!.height).toBeLessThan(copyBox!.y);
   }
 
-  for (const [selector, name] of [
-    ["h1", "manrope"],
-    ["body", "inter"],
-    [".hero-highlight", "manrope"],
-    ["#curriculum-title em", "lora"],
+  for (const [selector, weight, style] of [
+    ["h1", "700", "normal"],
+    ["body", "300", "normal"],
+    [".hero-highlight", "700", "normal"],
+    ["#curriculum-title em", "200", "italic"],
+    [".hero .eyebrow", "200", "normal"],
+    ["#curriculum-title", "600", "normal"],
+    [".topics-grid > :first-child h3", "500", "normal"],
+    [".hero-purchase .button", "500", "normal"],
+    [".instructor-bio strong", "500", "normal"],
   ]) {
     const family = await page
       .locator(selector)
       .evaluate((element) => getComputedStyle(element).fontFamily);
-    expect(family.toLowerCase()).toContain(name);
+    expect(family.toLowerCase()).toContain("prompt");
+    expect(
+      await page.locator(selector).evaluate((element) => {
+        const computed = getComputedStyle(element);
+        return { weight: computed.fontWeight, style: computed.fontStyle };
+      }),
+    ).toEqual({ weight, style });
     expect(
       await page.locator(selector).evaluate((element) => {
         const style = getComputedStyle(element);
@@ -821,7 +832,7 @@ test("passos com entrada sequencial única e hover sem mudança de layout", asyn
       .poll(() =>
         number.evaluate((element) => getComputedStyle(element).backgroundColor),
       )
-      .toBe("rgb(7, 58, 73)");
+      .toBe("rgb(6, 42, 48)");
     await expect
       .poll(() => number.evaluate((element) => getComputedStyle(element).color))
       .toBe("rgb(255, 255, 255)");

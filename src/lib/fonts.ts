@@ -1,26 +1,39 @@
 import localFont from "next/font/local";
 
-export const manrope = localFont({
-  src: "../../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",
-  variable: "--font-manrope",
-  weight: "200 800",
+export const prompt = localFont({
+  src: [
+    {
+      path: "../../node_modules/@fontsource/prompt/files/prompt-latin-700-normal.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../node_modules/@fontsource/prompt/files/prompt-latin-600-normal.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../node_modules/@fontsource/prompt/files/prompt-latin-500-normal.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../node_modules/@fontsource/prompt/files/prompt-latin-300-normal.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../node_modules/@fontsource/prompt/files/prompt-latin-200-normal.woff2",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../node_modules/@fontsource/prompt/files/prompt-latin-200-italic.woff2",
+      weight: "200",
+      style: "italic",
+    },
+  ],
+  variable: "--font-prompt",
   display: "swap",
   fallback: ["Arial", "sans-serif"],
-});
-
-export const inter = localFont({
-  src: "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
-  variable: "--font-inter",
-  weight: "100 900",
-  display: "swap",
-  fallback: ["Arial", "sans-serif"],
-});
-
-export const lora = localFont({
-  src: "../../node_modules/@fontsource/lora/files/lora-latin-400-italic.woff2",
-  variable: "--font-lora",
-  weight: "400",
-  style: "italic",
-  display: "swap",
-  fallback: ["Georgia", "serif"],
 });

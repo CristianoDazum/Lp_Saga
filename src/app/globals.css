@@ -1,20 +1,26 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-petrol: #073a49;
+  --color-petrol: #062a30;
   --color-paper: #f7f5ef;
-  --color-sun: #f3bc23;
-  --font-sans: var(--font-inter), Arial, sans-serif;
-  --font-heading: var(--font-manrope), Arial, sans-serif;
-  --font-serif: var(--font-lora), Georgia, serif;
+  --color-sun: #ffb71b;
+  --font-sans: var(--font-prompt), Arial, sans-serif;
+  --font-heading: var(--font-prompt), Arial, sans-serif;
+  --font-accent: var(--font-prompt), Arial, sans-serif;
 }
 
 :root {
-  --petrol: #073a49;
-  --deep: #062f3b;
+  --petrol: #062a30;
+  --deep: #025157;
   --paper: #f7f5ef;
-  --yellow: #f3bc23;
-  --muted: #52666b;
+  --yellow: #ffb71b;
+  --green: #025157;
+  --blue: #0069a7;
+  --muted: #536166;
+  --weight-headline: 700;
+  --weight-title: 600;
+  --weight-emphasis: 500;
+  --yellow-hover: color-mix(in srgb, var(--yellow), white 10%);
   --line: #d7ded8;
 }
 * {
@@ -28,8 +34,8 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--petrol);
-  font-family: var(--font-inter), Arial, sans-serif;
-  font-weight: 400;
+  font-family: var(--font-prompt), Arial, sans-serif;
+  font-weight: 300;
   font-synthesis: none;
 }
 a {
@@ -51,11 +57,10 @@ summary {
   background: var(--yellow);
 }
 :focus-visible {
-  outline: 3px solid #9c6400;
+  outline: 3px solid var(--blue);
   outline-offset: 6px;
 }
-.hero-shell :is(header, .hero, .site-footer) :focus-visible,
-.closing-section :focus-visible {
+.hero-shell :is(header, .hero, .site-footer) :focus-visible {
   outline-color: var(--yellow);
 }
 main:focus {
@@ -98,42 +103,15 @@ main:focus {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 16px;
-  color: var(--petrol);
+  flex-shrink: 0;
 }
-.brand-light {
-  color: var(--paper);
-}
-.brand-word {
-  font-size: 46px;
-  font-weight: 800;
-  letter-spacing: -4px;
-  line-height: 1;
-  font-family: var(--font-manrope), Arial, sans-serif;
-}
-.brand-dot {
-  color: #9d6d00;
-}
-.brand-light .brand-dot {
-  color: var(--yellow);
-}
-.brand-divider {
-  width: 1px;
-  height: 32px;
-  background: currentColor;
-  opacity: 0.28;
-}
-.brand-descriptor {
-  font-size: 10px;
-  line-height: 1.5;
-  letter-spacing: 2.7px;
-}
-.brand-descriptor > span {
+.brand-logo {
   display: block;
-  font-size: 10px;
-  letter-spacing: 0.25px;
-  opacity: 1;
-  color: #d0dcd9;
+  width: 110px;
+  height: auto;
+}
+.footer-inner .brand-logo {
+  width: 100px;
 }
 .site-header nav {
   display: flex;
@@ -164,17 +142,17 @@ main:focus {
   align-items: center;
   gap: 22px;
   background: var(--yellow);
-  color: #102e36;
+  color: var(--petrol);
   min-height: 56px;
   padding: 17px 24px;
   border-radius: 4px;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: var(--weight-emphasis);
   line-height: 1.4;
-  font-family: var(--font-manrope), Arial, sans-serif;
+  font-family: var(--font-prompt), Arial, sans-serif;
 }
 .button:focus-visible {
-  background: #f7c43d;
+  background: var(--yellow-hover);
 }
 .button .icon {
   width: 20px;
@@ -194,8 +172,8 @@ main:focus {
 }
 .eyebrow {
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-weight: 200;
+  letter-spacing: 0.5em;
   line-height: 1.6;
   margin: 0 0 21px;
 }
@@ -203,7 +181,7 @@ main:focus {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #f7d274;
+  color: #d5dfdd;
 }
 .tiny-line {
   display: block;
@@ -218,19 +196,21 @@ p {
   margin-top: 0;
 }
 h1 {
-  font-size: clamp(42px, 4vw, 57px);
-  font-weight: 600;
+  font-size: clamp(42px, 4vw, 55px);
+  font-weight: var(--weight-headline);
   letter-spacing: -0.045em;
-  line-height: 1.09;
+  line-height: 1.12;
   margin-bottom: 23px;
-  font-family: var(--font-manrope), Arial, sans-serif;
+  font-family: var(--font-prompt), Arial, sans-serif;
 }
 h2 em {
-  font-family: var(--font-lora), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-prompt), Arial, sans-serif;
+  font-weight: 200;
+  font-style: italic;
+  letter-spacing: 0.015em;
 }
 .hero-highlight {
-  color: #f5cc63;
+  color: var(--yellow);
   white-space: nowrap;
   font-style: normal;
 }
@@ -242,7 +222,7 @@ h2 em {
   margin-bottom: 25px;
 }
 .hero-description strong {
-  font-weight: 500;
+  font-weight: var(--weight-emphasis);
   color: #f7f5ef;
 }
 .hero-purchase > p {
@@ -254,6 +234,7 @@ h2 em {
   color: #bfcdce;
 }
 .hero-purchase > p strong {
+  font-weight: var(--weight-title);
   font-size: 16px;
   color: var(--paper);
 }
@@ -261,13 +242,13 @@ h2 em {
   max-width: 440px;
   margin-top: 20px;
   padding-left: 14px;
-  border-left: 2px solid #789d93;
+  border-left: 2px solid var(--green);
 }
 .hero-example-title {
   margin-bottom: 5px;
-  font-family: var(--font-manrope), Arial, sans-serif;
+  font-family: var(--font-prompt), Arial, sans-serif;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: var(--weight-emphasis);
   line-height: 1.45;
   text-wrap: balance;
   color: var(--paper);
@@ -277,10 +258,10 @@ h2 em {
   white-space: nowrap;
 }
 .hero-example-sound {
-  color: #b7d3c7;
+  color: var(--paper);
 }
 .hero-example-word {
-  color: #f5cc63;
+  color: var(--yellow);
 }
 .hero-example-description {
   margin-bottom: 0;
@@ -305,8 +286,8 @@ h2 em {
 .cover-frame {
   position: relative;
   padding: 15px;
-  background: #ffffff0a;
-  border: 1px solid #ffffff26;
+  background: #ffffff06;
+  border: 1px solid #ffffff1f;
   border-radius: 8px;
 }
 .course-cover {
@@ -322,10 +303,12 @@ h2 em {
   margin: 38px 3px 0;
 }
 .visual-caption > span {
+  font-weight: 200;
+  letter-spacing: 0.015em;
   font-size: 22px;
-  font-family: var(--font-lora), Georgia, serif;
+  font-family: var(--font-prompt), Arial, sans-serif;
   font-style: italic;
-  color: #dfebe4;
+  color: var(--paper);
 }
 .soundwave {
   display: flex;
@@ -334,7 +317,7 @@ h2 em {
   height: 42px;
   width: 114px;
   gap: 3px;
-  color: #92b6ad;
+  color: #c3d0d1;
 }
 .soundwave span {
   width: 3px;
@@ -361,7 +344,7 @@ h2 em {
   font-size: 12px;
 }
 .facts-inner .icon {
-  color: #94b4ab;
+  color: #d5dfdd;
   width: 18px;
   height: 18px;
 }
@@ -377,20 +360,20 @@ h2 em {
   align-items: flex-end;
   justify-content: space-between;
   gap: 30px;
-  margin-bottom: 34px;
+  margin-bottom: 38px;
 }
 .section-heading .eyebrow,
 .instructor-copy .eyebrow {
-  color: #4c625a;
+  color: var(--green);
   margin-bottom: 13px;
 }
 h2 {
   font-size: clamp(33px, 3vw, 43px);
-  font-weight: 600;
+  font-weight: var(--weight-title);
   letter-spacing: -0.04em;
   line-height: 1.2;
   margin-bottom: 0;
-  font-family: var(--font-manrope), Arial, sans-serif;
+  font-family: var(--font-prompt), Arial, sans-serif;
 }
 .section-heading > p {
   font-size: 13px;
@@ -421,23 +404,23 @@ h2 {
   display: flex;
   align-items: flex-start;
   gap: 22px;
-  padding: 22px 16px;
+  padding: 24px 16px;
   border-top: 1px solid var(--line);
   height: 100%;
   border-radius: 4px;
 }
 .topic-number {
   font-size: 11px;
-  color: #52665c;
+  color: var(--blue);
   margin-top: 7px;
 }
 .topic h3 {
-  font-size: 18px;
+  font-size: 17px;
   letter-spacing: -0.15px;
-  font-weight: 700;
+  font-weight: var(--weight-emphasis);
   margin-bottom: 7px;
-  font-family: var(--font-manrope), Arial, sans-serif;
-  line-height: 1.35;
+  font-family: var(--font-prompt), Arial, sans-serif;
+  line-height: 1.5;
 }
 .topic p {
   color: var(--muted);
@@ -461,16 +444,16 @@ h2 {
   width: 6px;
   height: 6px;
   flex-shrink: 0;
-  background: #8c6900;
+  background: var(--blue);
   border-radius: 50%;
 }
 .curriculum-note p {
   font-size: 12px;
   margin-bottom: 0;
-  color: #476159;
+  color: var(--green);
 }
 .instructor-section {
-  background: #e9ede5;
+  background: color-mix(in srgb, var(--green) 4%, var(--paper));
   color: var(--petrol);
   padding-block: 56px;
 }
@@ -486,7 +469,7 @@ h2 {
   aspect-ratio: 1.15;
   overflow: hidden;
   border-radius: 6px;
-  background: #dbe3d7;
+  background: color-mix(in srgb, var(--green) 12%, var(--paper));
 }
 .instructor-photo {
   object-fit: cover;
@@ -498,12 +481,12 @@ h2 {
 .instructor-bio {
   font-size: 14px;
   line-height: 1.8;
-  color: #4d6259;
+  color: var(--muted);
   max-width: 470px;
   margin-bottom: 21px;
 }
 .instructor-bio strong {
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   color: var(--petrol);
 }
 .steps {
@@ -525,13 +508,13 @@ h2 {
   position: absolute;
   inset: -6px -8px;
   border-radius: 6px;
-  background: rgb(7 58 73 / 4%);
+  background: rgb(6 42 48 / 4%);
   opacity: 0;
   z-index: -1;
 }
 .step > span {
   font-size: 10px;
-  border: 1px solid #aabdab;
+  border: 1px solid color-mix(in srgb, var(--green) 35%, var(--paper));
   display: grid;
   place-items: center;
   width: 25px;
@@ -542,18 +525,20 @@ h2 {
 .steps p {
   font-size: 12px;
   line-height: 1.7;
-  color: #4d6259;
+  color: var(--muted);
   margin: 0;
 }
 .steps strong {
   display: block;
   color: var(--petrol);
   font-size: 14px;
-  font-weight: 700;
-  font-family: var(--font-manrope), Arial, sans-serif;
+  font-weight: var(--weight-emphasis);
+  font-family: var(--font-prompt), Arial, sans-serif;
 }
 .closing-section {
-  background: var(--petrol);
+  background: var(--paper);
+  color: var(--petrol);
+  border-top: 1px solid var(--line);
   padding-top: 53px;
 }
 .closing-offer {
@@ -562,7 +547,7 @@ h2 {
 }
 .closing-offer .eyebrow {
   font-size: 10px;
-  color: #e4bd63;
+  color: var(--green);
   margin-bottom: 17px;
 }
 .closing-offer h2 {
@@ -570,11 +555,11 @@ h2 {
   line-height: 1.2;
 }
 .closing-offer h2 em {
-  color: #e9c977;
+  color: var(--green);
 }
 .offer-summary {
   font-size: 12px;
-  color: #c4d3d1;
+  color: var(--muted);
   display: flex;
   align-items: baseline;
   gap: 10px;
@@ -582,43 +567,44 @@ h2 {
   margin-block: 22px 22px;
 }
 .offer-summary > span {
-  color: #83a39b;
+  color: var(--blue);
 }
 .offer-summary strong {
+  font-weight: var(--weight-title);
   font-size: 16px;
-  color: var(--paper);
+  color: var(--petrol);
 }
 .closing-offer .button {
   min-width: 320px;
 }
 .offer-footnote {
-  font-size: 10px;
-  color: #b6c9c7;
+  font-size: 11px;
+  color: var(--muted);
   margin: 12px 0 0;
 }
 .faq {
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
   gap: 55px;
-  border-top: 1px solid #ffffff25;
+  border-top: 1px solid var(--line);
   padding-block: 27px 30px;
 }
 .faq h3 {
-  font-family: var(--font-manrope), Arial, sans-serif;
-  font-weight: 600;
+  font-family: var(--font-prompt), Arial, sans-serif;
+  font-weight: var(--weight-emphasis);
   font-size: 22px;
   margin-top: 9px;
 }
 .faq h3 > span {
   display: block;
-  font-family: var(--font-inter), Arial, sans-serif;
+  font-family: var(--font-prompt), Arial, sans-serif;
   font-size: 12px;
-  color: #b6c9c7;
+  color: var(--muted);
   margin-top: 10px;
-  font-weight: 400;
+  font-weight: 300;
 }
 .faq details {
-  border-bottom: 1px solid #ffffff25;
+  border-bottom: 1px solid var(--line);
 }
 .faq summary {
   display: flex;
@@ -629,7 +615,7 @@ h2 {
   list-style: none;
   min-height: 49px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 300;
 }
 .faq summary::-webkit-details-marker {
   display: none;
@@ -649,7 +635,7 @@ h2 {
   position: absolute;
   width: 11px;
   height: 1px;
-  background: #e6c064;
+  background: var(--blue);
   top: 7px;
   left: 1px;
 }
@@ -662,7 +648,7 @@ h2 {
 }
 .faq details p {
   font-size: 13px;
-  color: #c1d0ce;
+  color: var(--muted);
   line-height: 1.8;
   margin: 0 25px 18px 0;
 }
@@ -676,22 +662,11 @@ h2 {
   justify-content: space-between;
   gap: 24px;
 }
-.footer-inner .brand-word {
-  font-size: 36px;
-}
-.footer-inner .brand-descriptor {
-  font-size: 10px;
-  letter-spacing: 1.5px;
-}
-.footer-inner .brand-descriptor > span {
-  font-size: 10px;
-}
-.footer-inner .brand-divider {
-  height: 27px;
-}
 .footer-inner > p {
+  font-weight: 200;
+  letter-spacing: 0.015em;
   margin: 0;
-  font-family: var(--font-lora), Georgia, serif;
+  font-family: var(--font-prompt), Arial, sans-serif;
   font-style: italic;
   font-size: 13px;
   color: #c1d1ce;
@@ -809,19 +784,7 @@ h2 {
   .site-header nav {
     gap: 20px;
   }
-  .brand-word {
-    font-size: 39px;
-  }
-  .brand {
-    gap: 12px;
-  }
-  .brand-descriptor {
-    font-size: 10px;
-    letter-spacing: 1.8px;
-  }
-  .brand-descriptor > span {
-    font-size: 10px;
-  }
+
   .hero {
     padding-block: 40px 45px;
     column-gap: 25px;
@@ -910,23 +873,8 @@ h2 {
     min-height: 78px;
     gap: 10px;
   }
-  .brand-word {
-    font-size: 36px;
-    letter-spacing: -3px;
-  }
-  .brand-descriptor {
-    font-size: 10px;
-    letter-spacing: 1.3px;
-  }
-  .brand-descriptor > span {
-    font-size: 10px;
-    letter-spacing: 0.1px;
-  }
-  .brand {
-    gap: 9px;
-  }
-  .brand-divider {
-    height: 27px;
+  .brand-logo {
+    width: 88px;
   }
   .site-header .nav-link {
     display: none;
@@ -1049,10 +997,10 @@ h2 {
     margin-top: 5px;
   }
   .topic h3 {
-    font-size: 18px;
-    font-family: var(--font-manrope), Arial, sans-serif;
-    font-weight: 700;
-    line-height: 1.35;
+    font-size: 17px;
+    font-family: var(--font-prompt), Arial, sans-serif;
+    font-weight: var(--weight-emphasis);
+    line-height: 1.5;
   }
   .topic p {
     font-size: 13px;
@@ -1103,8 +1051,8 @@ h2 {
   }
   .steps strong {
     font-size: 14px;
-    font-family: var(--font-manrope), Arial, sans-serif;
-    font-weight: 700;
+    font-family: var(--font-prompt), Arial, sans-serif;
+    font-weight: var(--weight-emphasis);
   }
   .instructor-copy .button {
     width: 100%;
@@ -1141,7 +1089,7 @@ h2 {
     gap: 18px;
   }
   .offer-footnote {
-    font-size: 10px;
+    font-size: 11px;
   }
   .faq {
     display: block;
@@ -1152,12 +1100,12 @@ h2 {
   }
   .faq h3 > span {
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 300;
   }
   .faq summary {
     font-size: 13px;
     min-height: 54px;
-    font-weight: 500;
+    font-weight: 300;
   }
   .faq details p {
     font-size: 13px;
@@ -1168,9 +1116,6 @@ h2 {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
-  }
-  .footer-inner .brand-word {
-    font-size: 38px;
   }
   .footer-inner nav {
     width: 100%;
@@ -1192,10 +1137,6 @@ h2 {
 @media (max-width: 350px) {
   .container {
     width: calc(100% - 32px);
-  }
-  .site-header .brand-divider,
-  .site-header .brand-descriptor {
-    display: none;
   }
   h1 {
     font-size: 35px;
@@ -1258,7 +1199,7 @@ h2 {
     transform-origin: center;
   }
   .instructor-portrait:hover {
-    box-shadow: 0 12px 28px rgb(7 58 73 / 16%);
+    box-shadow: 0 12px 28px rgb(6 42 48 / 16%);
   }
   .instructor-portrait:hover .instructor-photo {
     transform: scale(1.035);
@@ -1282,7 +1223,7 @@ h2 {
     transition: transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
   }
   .button:hover {
-    background: #f7c43d;
+    background: var(--yellow-hover);
     transform: translateY(-2px);
     box-shadow: 0 5px 16px rgb(0 0 0 / 10%);
   }
@@ -1308,8 +1249,8 @@ h2 {
   .topic:hover {
     transform: translateY(-4px);
     background-color: #fffdf8;
-    border-color: #b4c6bb;
-    box-shadow: 0 8px 20px rgb(7 58 73 / 7%);
+    border-color: color-mix(in srgb, var(--green) 22%, var(--paper));
+    box-shadow: 0 8px 20px rgb(6 42 48 / 7%);
   }
 }
 @media (max-width: 600px) {
@@ -1333,19 +1274,8 @@ h2 {
   .closing-offer .button {
     font-size: 13px;
   }
-  .brand-descriptor {
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
-  .brand-descriptor > span {
-    font-size: 10px;
-  }
 }
 @media (max-width: 430px) {
-  .site-header .brand-divider,
-  .site-header .brand-descriptor {
-    display: none;
-  }
   .visual-topline > span:last-child {
     display: none;
   }
