@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export function Brand({ light = false }: { light?: boolean }) {
+export function Brand() {
   return (
     <a
       className="brand"
@@ -8,11 +8,11 @@ export function Brand({ light = false }: { light?: boolean }) {
       aria-label="Saga Eloquência com Leonardo Hermes — início"
     >
       <Image
-        src={`/images/brand/saga-lateral-${light ? "negativo" : "positivo"}.png`}
-        alt="SAGA"
-        width={1523}
-        height={996}
-        sizes="(max-width: 600px) 88px, 110px"
+        src="/images/brand/saga-english.png"
+        alt="SAGA English"
+        width={1214}
+        height={578}
+        sizes="(max-width: 600px) 176px, 190px"
         className="brand-logo"
       />
     </a>

@@ -21,7 +21,7 @@ export default function Home() {
       </a>
       <div className="hero-shell" id="inicio">
         <header className="site-header container">
-          <Brand light />
+          <Brand />
           <nav aria-label="Navegação principal">
             <a className="nav-link" href="#o-curso">
               O curso
@@ -285,7 +285,7 @@ export default function Home() {
         </main>
         <footer className="site-footer">
           <Reveal className="container footer-inner">
-            <Brand light />
+            <Brand />
             <p>A sua voz também faz parte da sua jornada.</p>
             <nav aria-label="Contatos oficiais">
               <a

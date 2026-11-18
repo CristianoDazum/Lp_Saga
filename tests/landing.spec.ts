@@ -15,6 +15,31 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
   await expect(page).toHaveTitle(/Pronúncia em Inglês.*Saga Eloquência/);
   await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
   await expect(page.locator("h1")).toHaveCount(1);
+  expect(
+    await page
+      .locator(".hero-shell")
+      .evaluate((element) => getComputedStyle(element).backgroundColor),
+  ).toBe("rgb(0, 105, 167)");
+  for (const selector of [".site-header", ".site-footer"]) {
+    expect(
+      await page
+        .locator(selector)
+        .evaluate((element) => getComputedStyle(element).backgroundColor),
+    ).toBe("rgb(255, 255, 255)");
+  }
+  const headerBrand = await page.locator(".site-header .brand").boundingBox();
+  const heroContent = await page.locator(".hero").boundingBox();
+  expect(headerBrand!.x).toBeCloseTo(heroContent!.x, 1);
+  await expect(page.locator(".brand-logo")).toHaveCount(2);
+  for (const logo of await page.locator(".brand-logo").all()) {
+    await expect(logo).toHaveAttribute("alt", "SAGA English");
+    await expect(logo).toHaveAttribute("src", /saga-english\.png/);
+    const ratio = await logo.evaluate((element) => {
+      const box = element.getBoundingClientRect();
+      return box.width / box.height;
+    });
+    expect(ratio).toBeCloseTo(1214 / 578, 2);
+  }
   await expect(page.locator("h1 em, h1 i")).toHaveCount(0);
   await expect(page.locator(".hero-highlight")).toHaveText("com segurança?");
   expect(
@@ -58,12 +83,12 @@ test("conteúdo, links, responsividade e FAQ", async ({ page }, testInfo) => {
     await page
       .locator(".hero-example-sound")
       .evaluate((element) => getComputedStyle(element).color),
-  ).toBe("rgb(247, 245, 239)");
+  ).toBe("rgb(255, 255, 255)");
   expect(
     await page
       .locator(".hero-example-word")
       .evaluate((element) => getComputedStyle(element).color),
-  ).toBe("rgb(255, 183, 27)");
+  ).toBe("rgb(255, 255, 255)");
   await expect(page.locator(".topic")).toHaveCount(6);
   await expect(page.locator("#curriculum-title")).toHaveText(
     "Você vai corrigir os erros mais comuns de pronúncia entre alunos de nível básico.",
@@ -296,7 +321,7 @@ test("CTA centralizado nos conteúdos, crédito acessível e capa configurável"
   await credit.hover();
   await expect
     .poll(() => credit.evaluate((element) => getComputedStyle(element).color))
-    .toBe("rgb(255, 183, 27)");
+    .toBe("rgb(6, 42, 48)");
   await page.locator(".site-footer").screenshot({
     path: `test-results/feedback-rodape-${testInfo.project.name}.png`,
   });

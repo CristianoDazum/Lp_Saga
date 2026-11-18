@@ -2,7 +2,7 @@
 
 Landing page local para **O Guia Definitivo de Pronúncia Básica em Inglês**, de Leonardo Hermes. Quatro seções comerciais, sem checkout próprio, formulários, integrações pagas ou rastreadores.
 
-Versão em homologação na branch `brandboard`: identidade oficial SAGA com hierarquia tipográfica e composição refinadas. Detalhes em [identidade visual](docs/IDENTIDADE-VISUAL.md) e [refinamento minimalista](docs/REFINAMENTO-MINIMALISTA.md). Mantidos os conteúdos comerciais, créditos da DazumDigital e referência centralizada da capa. Histórico: [capa sem selo e passos com animações](docs/PASSOS-E-CAPA.md), [microinterações de foto, capa, botões e navegação](docs/MICROINTERACOES.md) e [fontes e fotografia](docs/ALTERACOES-VISUAIS.md).
+Versão local em homologação na branch `brandboard`: identidade SAGA English, com azul principal `#0069A7` e PNG oficial fornecido pela Mari. Detalhes em [aplicação SAGA English](docs/SAGA-ENGLISH.md). Histórico da base: [identidade visual](docs/IDENTIDADE-VISUAL.md) e [refinamento minimalista](docs/REFINAMENTO-MINIMALISTA.md). Mantidos os conteúdos comerciais, créditos da DazumDigital e referência centralizada da capa. Histórico: [capa sem selo e passos com animações](docs/PASSOS-E-CAPA.md), [microinterações de foto, capa, botões e navegação](docs/MICROINTERACOES.md) e [fontes e fotografia](docs/ALTERACOES-VISUAIS.md).
 
 ## Validação da rodada de feedback
 
@@ -10,7 +10,7 @@ Versão em homologação na branch `brandboard`: identidade oficial SAGA com hie
 - Validados os cinco CTAs de compra, incluindo navegação para o destino interceptado, nova aba e isolamento de `window.opener`. Nenhuma compra foi realizada.
 - Verificados centralização do CTA, frase da seção preservada, créditos com foco visível e link em nova aba, configuração da capa e ausência de regressões nas microinterações.
 - Nenhum erro de console nos cenários funcionais; nenhuma violação axe WCAG A/AA na apresentação estável.
-- Sem rolagem horizontal em 320, 375, 768 e 1440px. Alturas da identidade atualizada: 4.635px, 4.531px, 3.013px e 2.994px, respectivamente. Em desktop de 1440 × 768px, são **3,90 dobras** (2.974px na primeira aplicação da identidade).
+- Sem rolagem horizontal em 320, 375, 768 e 1440px. Alturas da identidade atualizada: 4.654px, 4.550px, 3.021px e 2.995px, respectivamente. Em desktop de 1440 × 768px, são **3,90 dobras** (2.994px antes da adaptação SAGA English).
 - A primeira dobra mantém imagem, proporções, preload e hover da capa atual. Nenhuma arte provisória foi criada.
 - Validado em Chromium; não foi executado Lighthouse ou teste em aparelhos físicos. A troca pela capa final continua pendente do arquivo da equipe de design.
 
@@ -70,7 +70,7 @@ docs/                  # Relatório de homologação
 - O rodapé inclui “Feito por DazumDigital”, com link para `https://www.dazumdigital.com.br/`, em nova aba, `noopener noreferrer`, foco visível e hover discreto.
 - A capa utilizada veio de `Capa Guia Definitivo de Pronúncia.png`, encontrada junto ao briefing em Downloads, com 1374 × 1145px. O antigo painel LH foi removido e substituído pela foto original `leo_apresentando.png`, fornecida pelo cliente e copiada para `public/images/leo-apresentando.png`, sem filtros ou alterações na aparência. O `next/image` otimiza a entrega e carrega a foto abaixo da dobra sob demanda.
 - A capa foi convertida para WebP, preservando as dimensões: 62.462 bytes, contra 1.457.019 bytes do PNG original (redução de aproximadamente 95,7%). O `next/image` também entrega versões responsivas.
-- Marca oficial SAGA em PNG transparente no cabeçalho e rodapé, sem redesenho ou assinatura adicionada ao logotipo. Paleta oficial com os neutros de apoio. O favicon existente foi preservado nesta rodada.
+- Marca oficial SAGA English em PNG transparente original no cabeçalho e rodapé, sobre branco, sem recorte, recoloração ou deformação. O favicon textual foi substituído pelo mesmo arquivo fornecido, sem criar uma variante. Azul principal `#0069A7` na primeira dobra e nos acentos; amarelo preservado nos CTAs. Os nomes textuais Saga Eloquência permanecem intactos.
 - Animação do hero em CSS e reveal com IntersectionObserver/Web Animations, sem Framer Motion. O conteúdo nasce visível e permanece utilizável sem JavaScript. Movimento reduzido é respeitado, inclusive se a preferência mudar durante a sessão.
 - Página estática por padrão, sem chamadas à API da Kiwify. Imagem com `next/image`; scripts de terceiros ausentes. Prompt Bold (700) na headline, Semibold (600) nos títulos principais, Medium (500) nos títulos menores e botões, Light (300) nos textos e Extra Light (200, normal e itálico verdadeiro) nos destaques são servidas pelo próprio projeto via `next/font/local`, a partir de `@fontsource/prompt`, sem requisições ao Google Fonts. Seis arquivos WOFF2 latinos são usados (108.960 bytes no total). A licença OFL acompanha a dependência e está reproduzida em `docs/Prompt-OFL.txt`.
 - Os tópicos são artigos informativos, sem setas ou falsa semântica de botão. Em mouse com hover real, elevam 4px em 200ms com sombra, fundo e borda discretos; em dispositivos de toque não dependem de hover. Movimento reduzido desativa a elevação.
@@ -115,4 +115,4 @@ Não é necessário alterar o JSX, proporções ou CSS da primeira dobra. Até a
 
 O projeto usa Next.js App Router e o build padrão reconhecido pela Vercel: instalação `npm ci`, build `npm run build`, saída automática do Next.js. Não requer variáveis de ambiente. Não é necessário adicionar `vercel.json` para este caso.
 
-**Esta rodada fica isolada e versionada localmente na branch `brandboard`. A `main` e a versão em produção permanecem preservadas. Push manual somente após homologação; nenhum push ou deploy é executado automaticamente.** O repositório oficial é `DazumDigital/Lp_Saga` (`origin`) e o secundário é `CristianoDazum/Lp_Saga` (`secondary`).
+**A adaptação SAGA English permanece local na branch `brandboard`, sem novo commit, push ou deploy nesta rodada. A `main` e a versão em produção permanecem preservadas. Homologar visualmente antes de autorizar versionamento e publicação.** O repositório oficial é `DazumDigital/Lp_Saga` (`origin`) e o secundário é `CristianoDazum/Lp_Saga` (`secondary`).
