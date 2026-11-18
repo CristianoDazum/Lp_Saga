@@ -240,7 +240,7 @@ export default function Home() {
                   </ol>
                 </Reveal>
                 <Reveal>
-                  <CheckoutLink compact>Quero começar meu curso</CheckoutLink>
+                  <CheckoutLink compact>Quero falar com confiança</CheckoutLink>
                 </Reveal>
               </div>
             </div>
