@@ -259,7 +259,7 @@ export default function Home() {
                   Aula gravada <span>•</span> aprox. 30 min <span>•</span>{" "}
                   <strong>R$ 47,90</strong>
                 </p>
-                <CheckoutLink>Acessar o curso por R$ 47,90</CheckoutLink>
+                <CheckoutLink>Acesso vitalício por R$ 47,90</CheckoutLink>
                 <p className="offer-footnote">
                   Pagamento único. Conteúdo disponível pela Kiwify.
                 </p>
