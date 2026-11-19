@@ -36,13 +36,10 @@ export default function Home() {
                 <span className="tiny-line" /> SEU INGLÊS, COM MAIS CLAREZA
               </p>
               <h1 id="hero-title" className="hero-enter">
-                Você conhece
-                <br className="desktop-break" /> as palavras.
-                <br />
-                Mas consegue
-                <br className="desktop-break" /> pronunciá-las
-                <br className="desktop-break" />{" "}
-                <span className="hero-highlight">com segurança?</span>
+                Desenvolva a sua
+                <br className="desktop-break" /> pronúncia e
+                <br />{" "}
+                <span className="hero-highlight">saia do básico</span>
               </h1>
               <p className="hero-description hero-enter">
                 Em uma aula gravada de aproximadamente 30 minutos, Leonardo
@@ -134,8 +131,8 @@ export default function Home() {
                 <div>
                   <p className="eyebrow">01 / O CURSO</p>
                   <h2 id="curriculum-title">
-                    Você vai corrigir os erros mais comuns de <em>pronúncia</em>{" "}
-                    entre alunos de nível básico.
+                    Corrija os erros mais comuns do{" "}
+                    <span className="curriculum-highlight">nível básico</span>
                   </h2>
                 </div>
                 <p>
